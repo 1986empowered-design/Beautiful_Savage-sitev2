@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Admin Portal | Beautiful Savage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Orbitron:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void-black: #050505;
+            --deep-purple: #1a0a2e;
+            --gold-primary: #d4af37;
+            --gold-light: #f9e076;
+            --blood-red: #8b0000;
+            --teal-accent: #0d9488;
+            --starlight: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void-black);
+            color: var(--starlight);
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Passcode Modal */
+        .auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,5,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .auth-card {
+            background: rgba(26,10,46,0.9);
+            border: 1px solid var(--gold-primary);
+            padding: 35px 25px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(212,175,55,0.2);
+        }
+
+        .auth-card h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .auth-card p {
+            font-size: 0.75rem;
+            color: rgba(224,224,224,0.6);
+            margin-bottom: 20px;
+        }
+
+        input[type="password"], input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(5,5,5,0.8);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--starlight);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 10px rgba(212,175,55,0.3);
+        }
+
+        .btn-gold {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(74,20,140,0.4));
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, rgba(212,175,55,0.4), rgba(74,20,140,0.6));
+            box-shadow: 0 0 15px rgba(212,175,55,0.3);
+        }
+
+        .btn-danger {
+            background: rgba(139,0,0,0.3);
+            border: 1px solid var(--blood-red);
+            color: #ff6b6b;
+            padding: 6px 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* Admin Dashboard Layout */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .admin-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--gold-primary);
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(26,10,46,0.4);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(212,175,55,0.15);
+            padding-bottom: 8px;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(5,5,5,0.6);
+            border: 1px solid rgba(212,175,55,0.15);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .product-info h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            color: var(--gold-light);
+        }
+
+        .product-info p {
+            font-size: 0.7rem;
+            color: rgba(224,224,224,0.5);
+        }
+
+        .product-meta {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--teal-accent);
+        }
+
+        .badge-featured {
+            background: rgba(212,175,55,0.2);
+            color: var(--gold-primary);
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            border: 1px solid var(--gold-primary);
+            margin-left: 6px;
+        }
+
+        .flex-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid var(--gold-primary);
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        @media (max-width: 850px) {
+            .admin-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hidden Passcode Portal -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-card">
+            <h2>SANCTUM ADMIN</h2>
+            <p>Enter the master passcode to modify the reality matrix.</p>
+            <input type="password" id="passcodeInput" placeholder="Master Passcode (Default: SANCTUM2026)">
+            <button class="btn-gold" onclick="authenticate()">Unlock Sanctuary</button>
+            <p id="authError" style="color:#ff6b6b; margin-top:10px; display:none;">Incorrect Passcode</p>
+        </div>
+    </div>
+
+    <!-- Main Admin Dashboard -->
+    <div id="adminContent" style="display:none;">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">Sanctum Product & Reality Manager</h1>
+                <p style="font-size:0.75rem; color:var(--teal-accent);">Phase 2 Admin Engine Active</p>
+            </div>
+            <div class="flex-actions">
+                <a href="index.html" class="btn-gold" style="text-decoration:none; padding:8px 16px; font-size:0.7rem;">View Live Site</a>
+                <button class="btn-danger" onclick="lockAdmin()">Lock Portal</button>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Add/Edit Product Form -->
+            <div class="card">
+                <h3 id="formTitle">✦ Add New Sacred Offering</h3>
+                <form id="productForm" onsubmit="saveProduct(event)">
+                    <input type="hidden" id="editIndex" value="-1">
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">Product Title</label>
+                    <input type="text" id="pTitle" placeholder="e.g. Inner Sanctum Mastery" required>
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">Category</label>
+                    <select id="pCategory">
+                        <option value="Flagship Program">Flagship Program</option>
+                        <option value="Transformation Courses">Transformation Courses</option>
+                        <option value="30-Day Challenge">30-Day Challenge</option>
+                        <option value="Twin Flame">Twin Flame Program</option>
+                        <option value="Digital Downloads">Digital Downloads & Tools</option>
+                    </select>
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">Price ($)</label>
+                    <input type="number" id="pPrice" placeholder="97" required>
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">PayPal Direct Link</label>
+                    <input type="text" id="pPaypal" placeholder="https://paypal.me/yourname/97" required>
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">Description</label>
+                    <textarea id="pDesc" rows="3" placeholder="Description of the transmission or tool..." required></textarea>
+
+                    <label style="font-size:0.7rem; color:var(--gold-primary);">Artwork Upload / Image URL</label>
+                    <input type="text" id="pArtworkUrl" placeholder="Image URL or Base64 Data">
+                    <input type="file" id="pArtworkFile" accept="image/*" onchange="handleImageUpload(event)">
+                    <img id="artworkPreview" class="preview-img">
+
+                    <div style="margin-bottom:15px; display:flex; gap:10px; align-items:center;">
+                        <input type="checkbox" id="pFeatured" style="width:auto; margin:0;">
+                        <label for="pFeatured" style="font-size:0.75rem; color:var(--gold-light);">Featured Flagship Product</label>
+                    </div>
+
+                    <button type="submit" class="btn-gold" id="saveBtn">Manifest Product</button>
+                    <button type="button" class="btn-gold" style="background:rgba(255,255,255,0.05); margin-top:8px; border-color:rgba(224,224,224,0.3); color:var(--starlight);" onclick="resetForm()">Reset Form</button>
+                </form>
+            </div>
+
+            <!-- Existing Products Catalog List -->
+            <div class="card">
+                <h3>✦ Existing Products Catalog</h3>
+                <div id="productList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_PASSCODE = "SANCTUM2026";
+        let products = JSON.parse(localStorage.getItem('bs_products_v2')) || [
+            {
+                title: "Inner Sanctum Mastery",
+                category: "Flagship Program",
+                price: 197,
+                paypal: "https://paypal.me/beautifulsavage/197",
+                desc: "The complete 7-module consciousness transmission.",
+                artwork: "",
+                featured: true
+            },
+            {
+                title: "Quantum Heart Course",
+                category: "Transformation Courses",
+                price: 147,
+                paypal: "https://paypal.me/beautifulsavage/147",
+                desc: "7 modules of heart-field manifestation technology.",
+                artwork: "",
+                featured: false
+            }
+        ];
+
+        function authenticate() {
+            const input = document.getElementById('passcodeInput').value;
+            const savedPasscode = localStorage.getItem('bs_admin_passcode') || DEFAULT_PASSCODE;
+            if (input === savedPasscode) {
+                document.getElementById('authOverlay').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                renderProducts();
+            } else {
+                document.getElementById('authError').style.display = 'block';
+            }
+        }
+
+        function lockAdmin() {
+            document.getElementById('authOverlay').style.display = 'flex';
+            document.getElementById('adminContent').style.display = 'none';
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('pArtworkUrl').value = event.target.result;
+                    const img = document.getElementById('artworkPreview');
+                    img.src = event.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const editIdx = parseInt(document.getElementById('editIndex').value);
+            const product = {
+                title: document.getElementById('pTitle').value,
+                category: document.getElementById('pCategory').value,
+                price: parseFloat(document.getElementById('pPrice').value),
+                paypal: document.getElementById('pPaypal').value,
+                desc: document.getElementById('pDesc').value,
+                artwork: document.getElementById('pArtworkUrl').value,
+                featured: document.getElementById('pFeatured').checked
+            };
+
+            if (editIdx >= 0) {
+                products[editIdx] = product;
+            } else {
+                products.push(product);
+            }
+
+            localStorage.setItem('bs_products_v2', JSON.stringify(products));
+            resetForm();
+            renderProducts();
+        }
+
+        function editProduct(idx) {
+            const p = products[idx];
+            document.getElementById('editIndex').value = idx;
+            document.getElementById('pTitle').value = p.title;
+            document.getElementById('pCategory').value = p.category;
+            document.getElementById('pPrice').value = p.price;
+            document.getElementById('pPaypal').value = p.paypal;
+            document.getElementById('pDesc').value = p.desc;
+            document.getElementById('pArtworkUrl').value = p.artwork || '';
+            document.getElementById('pFeatured').checked = p.featured;
+
+            if (p.artwork) {
+                const img = document.getElementById('artworkPreview');
+                img.src = p.artwork;
+                img.style.display = 'block';
+            }
+
+            document.getElementById('formTitle').textContent = "✦ Edit Product";
+            document.getElementById('saveBtn').textContent = "Update Product";
+        }
+
+        function deleteProduct(idx) {
+            if (confirm("Are you sure you want to remove this product from the sanctuary?")) {
+                products.splice(idx, 1);
+                localStorage.setItem('bs_products_v2', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('editIndex').value = -1;
+            document.getElementById('artworkPreview').style.display = 'none';
+            document.getElementById('formTitle').textContent = "✦ Add New Sacred Offering";
+            document.getElementById('saveBtn').textContent = "Manifest Product";
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = '<p style="font-size:0.8rem; color:rgba(224,224,224,0.4);">No offerings manifested yet.</p>';
+                return;
+            }
+
+            products.forEach((p, idx) => {
+                const item = document.createElement('div');
+                item.className = 'product-item';
+                item.innerHTML = `
+                    <div class="product-info">
+                        <h4>${p.title} ${p.featured ? '<span class="badge-featured">FEATURED</span>' : ''}</h4>
+                        <p>${p.category} • ${p.desc.substring(0, 45)}...</p>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <span class="product-meta">$${p.price}</span>
+                        <button class="btn-gold" style="padding:4px 8px; font-size:0.65rem;" onclick="editProduct(${idx})">Edit</button>
+                        <button class="btn-danger" onclick="deleteProduct(${idx})">Delete</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+    </script>
+</body>
+  </html>
+  
