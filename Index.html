@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beautiful Savage | Sacred Digital Sanctum</title>
     
-    <!-- PWA Manifest & Android Install Settings -->
     <meta name="theme-color" content="#050505">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Orbitron:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
@@ -28,31 +26,30 @@
             color: var(--starlight);
             font-family: 'Space Mono', monospace;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding-bottom: 80px;
         }
 
-        /* Interactive Cosmic Canvas Background */
         #cosmicCanvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 30%, rgba(26,10,46,0.9) 0%, rgba(5,5,5,1) 85%);
+            background: radial-gradient(circle at 50% 20%, rgba(26,10,46,0.9) 0%, rgba(5,5,5,1) 85%);
         }
 
         nav {
-            padding: 20px 25px;
+            padding: 18px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5,5,5,0.85);
-            border-bottom: 1px solid rgba(212,175,55,0.2);
+            background: rgba(5,5,5,0.9);
+            border-bottom: 1px solid rgba(212,175,55,0.25);
             position: sticky; top: 0; z-index: 100;
             backdrop-filter: blur(10px);
         }
 
         .brand {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--gold-primary);
             text-decoration: none;
             letter-spacing: 2px;
@@ -61,122 +58,163 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .nav-btn {
             color: var(--starlight);
             text-decoration: none;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-family: 'Orbitron', sans-serif;
             background: rgba(212,175,55,0.1);
             border: 1px solid rgba(212,175,55,0.3);
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 4px;
-            cursor: pointer;
         }
 
-        /* Hero Portal Entrance */
         header {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 50px 20px 30px;
         }
 
         .sigil-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--gold-primary);
-            margin-bottom: 15px;
-            text-shadow: 0 0 20px rgba(212,175,55,0.5);
-            animation: pulseGlow 4s infinite ease-in-out;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 15px var(--gold-primary)); }
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(212,175,55,0.6);
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
             background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
         }
 
         p.subtitle {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--teal-accent);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 0 20px 60px;
+            padding: 0 20px;
         }
 
-        .portal-grid {
+        .section-header {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            font-size: 1.4rem;
+            margin: 40px 0 20px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            padding-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        /* Products Grid */
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+            gap: 20px;
         }
 
-        .portal-card {
-            background: rgba(26,10,46,0.4);
-            border: 1px solid rgba(212,175,55,0.2);
+        .card {
+            background: rgba(26,10,46,0.45);
+            border: 1px solid rgba(212,175,55,0.25);
             border-radius: 8px;
-            padding: 30px 25px;
-            text-align: center;
-            transition: all 0.3s ease;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
         }
 
-        .portal-card:hover {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 25px rgba(212,175,55,0.15);
-            transform: translateY(-5px);
-        }
-
-        .portal-card h3 {
-            font-family: 'Cinzel', serif;
+        .card-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: rgba(212,175,55,0.2);
+            border: 1px solid var(--gold-primary);
             color: var(--gold-light);
-            font-size: 1.3rem;
+            font-size: 0.58rem;
+            font-family: 'Orbitron', sans-serif;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--gold-light);
             margin-bottom: 10px;
+            padding-right: 50px;
         }
 
-        .portal-card p {
+        .card-desc {
             font-size: 0.78rem;
-            color: rgba(224,224,224,0.7);
-            margin-bottom: 20px;
+            color: rgba(224,224,224,0.75);
             line-height: 1.5;
+            margin-bottom: 18px;
         }
 
-        .btn-enter {
-            display: inline-block;
-            padding: 10px 22px;
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(212,175,55,0.15);
+        }
+
+        .price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+        }
+
+        .btn-action {
+            padding: 8px 16px;
             background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(74,20,140,0.4));
             border: 1px solid var(--gold-primary);
             color: var(--gold-light);
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-decoration: none;
             border-radius: 4px;
+            text-align: center;
         }
 
-        /* PWA Installation Banner */
-        .pwa-banner {
-            display: none;
-            margin: 30px 0;
-            background: rgba(13,148,136,0.15);
-            border: 1px solid var(--teal-accent);
-            padding: 20px;
-            border-radius: 8px;
+        /* Locked / Coming Soon Cards */
+        .card.locked {
+            opacity: 0.8;
+            border-color: rgba(13,148,136,0.3);
+        }
+
+        .locked-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,5,0.8);
+            backdrop-filter: blur(3px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            border-radius: 8px;
+        }
+
+        .lock-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--teal-accent);
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -187,7 +225,7 @@
     <nav>
         <a href="index.html" class="brand">BEAUTIFUL SAVAGE</a>
         <div class="nav-actions">
-            <button class="nav-btn" onclick="toggleAmbientSound()" id="soundToggle">Ambient: OFF</button>
+            <button class="nav-btn" onclick="toggleSound()" id="soundBtn">Sound: OFF</button>
             <a href="admin.html" class="nav-btn">Admin</a>
         </div>
     </nav>
@@ -195,57 +233,102 @@
     <header>
         <div class="sigil-icon">✦</div>
         <h1>Sacred Digital Sanctum</h1>
-        <p class="subtitle">Consciousness Engines & Fine Art Portal</p>
+        <p class="subtitle">Consciousness Engines, Products & Art</p>
     </header>
 
     <div class="container">
-        
-        <!-- Android App Install Prompt Banner -->
-        <div class="pwa-banner" id="pwaBanner">
-            <h4 style="font-family:'Cinzel'; color:var(--gold-light); margin-bottom:6px;">Install Sanctum Web App</h4>
-            <p style="font-size:0.75rem; color:rgba(224,224,224,0.8); margin-bottom:12px;">Add Beautiful Savage directly to your Android home screen for offline access.</p>
-            <button class="btn-enter" onclick="installApp()">Install App</button>
-        </div>
 
-        <div class="portal-grid">
-            <div class="portal-card">
-                <h3>Quantum Breath Trainer</h3>
-                <p>Interactive coherence engine featuring 5 sacred breathing modes, sound synthesizer, and session logging.</p>
-                <a href="breath_trainer.html" class="btn-enter">Enter Engine</a>
+        <!-- SECTION 1: INTERACTIVE ENGINES -->
+        <h2 class="section-header">✦ Sacred Engines</h2>
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <span class="card-badge">INTERACTIVE</span>
+                    <h3 class="card-title">Quantum Breath Trainer</h3>
+                    <p class="card-desc">Interactive coherence engine with 5 breathing modes, sound synthesizer, and practice log.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="price">FREE</span>
+                    <a href="breath_trainer.html" class="btn-action">Launch Engine</a>
+                </div>
             </div>
 
-            <div class="portal-card">
-                <h3>Sacred Art Gallery</h3>
-                <p>Original paintings, fine art prints, custom commissions, and the artist's story.</p>
-                <a href="gallery.html" class="btn-enter">View Gallery</a>
+            <div class="card">
+                <div>
+                    <span class="card-badge">GALLERY</span>
+                    <h3 class="card-title">Sacred Art & Commissions</h3>
+                    <p class="card-desc">Explore original paintings, archival fine art prints, and custom artwork requests.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="price">VISIT</span>
+                    <a href="gallery.html" class="btn-action">View Gallery</a>
+                </div>
             </div>
         </div>
+
+        <!-- SECTION 2: DIGITAL PRODUCTS & COURSES -->
+        <h2 class="section-header">✦ Digital Transmissions & Courses</h2>
+        <div class="grid" id="productGrid">
+            
+            <div class="card">
+                <span class="card-badge">FLAGSHIP</span>
+                <h3 class="card-title">Inner Sanctum Mastery</h3>
+                <p class="card-desc">The complete quantum realignment program designed to recalibrate energy fields and unlock subconscious blockages.</p>
+                <div class="card-footer">
+                    <span class="price">$197</span>
+                    <a href="https://paypal.me/beautifulsavage/197" target="_blank" class="btn-action">Acquire Access</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Quantum Heart Activation</h3>
+                <p class="card-desc">7 guided frequency modules and heart-field clearing exercises for magnetic energetic alignment.</p>
+                <div class="card-footer">
+                    <span class="price">$147</span>
+                    <a href="https://paypal.me/beautifulsavage/147" target="_blank" class="btn-action">Acquire Access</a>
+                </div>
+            </div>
+
+            <!-- LOCKED / COMING SOON PRODUCT -->
+            <div class="card locked">
+                <h3 class="card-title">Sacred Geometry Codex</h3>
+                <p class="card-desc">An immersive breakdown of energy geometry, visual frequency, and manifestation mechanics.</p>
+                <div class="card-footer">
+                    <span class="price">$297</span>
+                    <span class="btn-action" style="opacity:0.5;">Locked</span>
+                </div>
+                <div class="locked-overlay">
+                    <div style="font-size:1.5rem; margin-bottom:5px;">🔒</div>
+                    <div class="lock-text">TRANSMISSION LOCKED</div>
+                    <p style="font-size:0.65rem; color:rgba(224,224,224,0.6); margin-top:4px;">Vault Opening Soon</p>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
     <script>
-        // Interactive Canvas Particle Effect
+        // Cosmic Particle Background
         const canvas = document.getElementById('cosmicCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
 
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 35; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 2,
                 alpha: Math.random(),
-                speed: Math.random() * 0.3 + 0.1
+                speed: Math.random() * 0.2 + 0.1
             });
         }
 
-        function animateCanvas() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.y -= p.speed;
@@ -255,52 +338,29 @@
                 ctx.fillStyle = `rgba(212,175,55, ${p.alpha})`;
                 ctx.fill();
             });
-            requestAnimationFrame(animateCanvas);
+            requestAnimationFrame(animate);
         }
-        animateCanvas();
+        animate();
 
-        // Ambient Drone Synthesizer Toggle
-        let audioCtx = null;
-        let isSoundOn = false;
-        let osc = null;
-
-        function toggleAmbientSound() {
+        // Audio Tone Toggle
+        let audioCtx, osc, isPlaying = false;
+        function toggleSound() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            
-            if (!isSoundOn) {
+            if (!isPlaying) {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                let g = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(108, audioCtx.currentTime); // Sacred 108Hz tone
-                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
+                osc.frequency.setValueAtTime(108, audioCtx.currentTime);
+                g.gain.setValueAtTime(0.015, audioCtx.currentTime);
+                osc.connect(g); g.connect(audioCtx.destination);
                 osc.start();
-                document.getElementById('soundToggle').textContent = "Ambient: ON";
-                isSoundOn = true;
+                document.getElementById('soundBtn').textContent = "Sound: ON";
+                isPlaying = true;
             } else {
                 if (osc) osc.stop();
-                document.getElementById('soundToggle').textContent = "Ambient: OFF";
-                isSoundOn = false;
-            }
-        }
-
-        // PWA Android Installation Event
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('pwaBanner').style.display = 'block';
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    document.getElementById('pwaBanner').style.display = 'none';
-                    deferredPrompt = null;
-                });
+                document.getElementById('soundBtn').textContent = "Sound: OFF";
+                isPlaying = false;
             }
         }
     </script>
