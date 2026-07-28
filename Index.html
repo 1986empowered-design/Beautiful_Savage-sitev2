@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Savage | Sacred Digital Sanctum</title>
+    
+    <!-- PWA Manifest & Android Install Settings -->
+    <meta name="theme-color" content="#050505">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Orbitron:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void-black: #050505;
+            --deep-purple: #1a0a2e;
+            --gold-primary: #d4af37;
+            --gold-light: #f9e076;
+            --teal-accent: #0d9488;
+            --starlight: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void-black);
+            color: var(--starlight);
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Interactive Cosmic Canvas Background */
+        #cosmicCanvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 30%, rgba(26,10,46,0.9) 0%, rgba(5,5,5,1) 85%);
+        }
+
+        nav {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5,5,5,0.85);
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            color: var(--starlight);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Hero Portal Entrance */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .sigil-icon {
+            font-size: 3rem;
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 15px var(--gold-primary)); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 0.85rem;
+            color: var(--teal-accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .portal-card {
+            background: rgba(26,10,46,0.4);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 8px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .portal-card:hover {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 25px rgba(212,175,55,0.15);
+            transform: translateY(-5px);
+        }
+
+        .portal-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .portal-card p {
+            font-size: 0.78rem;
+            color: rgba(224,224,224,0.7);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn-enter {
+            display: inline-block;
+            padding: 10px 22px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(74,20,140,0.4));
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        /* PWA Installation Banner */
+        .pwa-banner {
+            display: none;
+            margin: 30px 0;
+            background: rgba(13,148,136,0.15);
+            border: 1px solid var(--teal-accent);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="cosmicCanvas"></canvas>
+
+    <nav>
+        <a href="index.html" class="brand">BEAUTIFUL SAVAGE</a>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="toggleAmbientSound()" id="soundToggle">Ambient: OFF</button>
+            <a href="admin.html" class="nav-btn">Admin</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="sigil-icon">✦</div>
+        <h1>Sacred Digital Sanctum</h1>
+        <p class="subtitle">Consciousness Engines & Fine Art Portal</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Android App Install Prompt Banner -->
+        <div class="pwa-banner" id="pwaBanner">
+            <h4 style="font-family:'Cinzel'; color:var(--gold-light); margin-bottom:6px;">Install Sanctum Web App</h4>
+            <p style="font-size:0.75rem; color:rgba(224,224,224,0.8); margin-bottom:12px;">Add Beautiful Savage directly to your Android home screen for offline access.</p>
+            <button class="btn-enter" onclick="installApp()">Install App</button>
+        </div>
+
+        <div class="portal-grid">
+            <div class="portal-card">
+                <h3>Quantum Breath Trainer</h3>
+                <p>Interactive coherence engine featuring 5 sacred breathing modes, sound synthesizer, and session logging.</p>
+                <a href="breath_trainer.html" class="btn-enter">Enter Engine</a>
+            </div>
+
+            <div class="portal-card">
+                <h3>Sacred Art Gallery</h3>
+                <p>Original paintings, fine art prints, custom commissions, and the artist's story.</p>
+                <a href="gallery.html" class="btn-enter">View Gallery</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Interactive Canvas Particle Effect
+        const canvas = document.getElementById('cosmicCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for (let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2,
+                alpha: Math.random(),
+                speed: Math.random() * 0.3 + 0.1
+            });
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y -= p.speed;
+                if (p.y < 0) p.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212,175,55, ${p.alpha})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // Ambient Drone Synthesizer Toggle
+        let audioCtx = null;
+        let isSoundOn = false;
+        let osc = null;
+
+        function toggleAmbientSound() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            if (!isSoundOn) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(108, audioCtx.currentTime); // Sacred 108Hz tone
+                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                document.getElementById('soundToggle').textContent = "Ambient: ON";
+                isSoundOn = true;
+            } else {
+                if (osc) osc.stop();
+                document.getElementById('soundToggle').textContent = "Ambient: OFF";
+                isSoundOn = false;
+            }
+        }
+
+        // PWA Android Installation Event
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwaBanner').style.display = 'block';
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    document.getElementById('pwaBanner').style.display = 'none';
+                    deferredPrompt = null;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
