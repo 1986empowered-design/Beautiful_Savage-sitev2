@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Gallery | Beautiful Savage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Orbitron:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void-black: #050505;
+            --deep-purple: #1a0a2e;
+            --gold-primary: #d4af37;
+            --gold-light: #f9e076;
+            --teal-accent: #0d9488;
+            --starlight: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--void-black);
+            color: var(--starlight);
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        nav {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5,5,5,0.9);
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--starlight);
+            text-decoration: none;
+            font-size: 0.75rem;
+            margin-left: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: var(--gold-primary);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        p.sub {
+            font-size: 0.8rem;
+            color: var(--teal-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Artist Story Section */
+        .story-section {
+            background: rgba(26,10,46,0.4);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .story-section h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            margin-bottom: 12px;
+        }
+
+        .story-section p {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: rgba(224,224,224,0.8);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .art-card {
+            background: rgba(5,5,5,0.8);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .art-placeholder {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #1a0a2e, #050505);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-primary);
+            font-family: 'Cinzel', serif;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+
+        .art-details {
+            padding: 20px;
+        }
+
+        .art-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .art-meta {
+            font-size: 0.7rem;
+            color: var(--teal-accent);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .art-price {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-commission {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(74,20,140,0.4));
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        /* Commission Form */
+        .commission-box {
+            background: rgba(26,10,46,0.5);
+            border: 1px solid var(--gold-primary);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .commission-box h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(5,5,5,0.8);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--starlight);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="brand">BEAUTIFUL SAVAGE</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="breath_trainer.html">Breathwork</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Sacred Art Gallery</h1>
+        <p class="sub">Original Works, Fine Prints & Custom Transmissions</p>
+    </header>
+
+    <div class="container">
+        <!-- Artist Story -->
+        <div class="story-section">
+            <h2>✦ The Artist's Sanctum</h2>
+            <p>Every piece produced in the Beautiful Savage sanctum is an intentional physical manifestation—crafted to anchor frequency, transform spaces, and bridge high-vibrational energetic work with raw physical beauty.</p>
+        </div>
+
+        <!-- Paintings & Prints Grid -->
+        <div class="gallery-grid">
+            <div class="art-card">
+                <div class="art-placeholder">✦ Artwork Canvas 1</div>
+                <div class="art-details">
+                    <h3 class="art-title">Quantum Frequency No. 1</h3>
+                    <div class="art-meta">Original Acrylic & Gold Leaf</div>
+                    <div class="art-price">$450</div>
+                    <a href="mailto:your-email@domain.com?subject=Inquiry: Quantum Frequency No. 1" class="btn-commission">Inquire / Acquire</a>
+                </div>
+            </div>
+
+            <div class="art-card">
+                <div class="art-placeholder">✦ Artwork Canvas 2</div>
+                <div class="art-details">
+                    <h3 class="art-title">Void & Starlight</h3>
+                    <div class="art-meta">Archival Fine Art Print</div>
+                    <div class="art-price">$85</div>
+                    <a href="mailto:your-email@domain.com?subject=Inquiry: Void & Starlight Print" class="btn-commission">Acquire Print</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Commissions Form -->
+        <div class="commission-box">
+            <h2>✦ Request Custom Painting Commission</h2>
+            <p style="font-size:0.75rem; color:rgba(224,224,224,0.7); margin-bottom:20px;">Commission a unique physical painting crafted with custom color frequencies and intentions for your space.</p>
+            <form action="mailto:your-email@domain.com" method="post" enctype="text/plain">
+                <input type="text" name="Name" placeholder="Your Name" required>
+                <input type="email" name="Email" placeholder="Your Email Address" required>
+                <textarea name="Vision" rows="4" placeholder="Describe your vision, preferred dimensions, or energy intent..." required></textarea>
+                <button type="submit" class="btn-commission">Submit Commission Request</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
