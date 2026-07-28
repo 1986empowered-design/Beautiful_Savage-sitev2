@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sacred Breath Trainer | Beautiful Savage</title>
+    <title>Quantum Breath Trainer | Beautiful Savage</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Orbitron:wght@500;700&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --void-black: #050505;
-            --deep-purple: #1a0a2e;
             --gold-primary: #d4af37;
             --gold-light: #f9e076;
             --teal-accent: #0d9488;
-            --teal-glow: rgba(13, 148, 136, 0.4);
             --starlight: #e0e0e0;
         }
 
@@ -25,375 +23,328 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(26,10,46,0.8) 0%, rgba(5,5,5,1) 100%);
-            z-index: -1;
+            padding-bottom: 40px;
         }
 
         nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 15px 25px;
+            width: 100%;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: rgba(5,5,5,0.9);
-            border-bottom: 1px solid rgba(212,175,55,0.2);
-            z-index: 100;
+            border-bottom: 1px solid rgba(212,175,55,0.25);
         }
 
         .brand {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--gold-primary);
             text-decoration: none;
-            letter-spacing: 2px;
         }
 
-        .nav-links a {
+        .nav-btn {
             color: var(--starlight);
             text-decoration: none;
-            font-size: 0.75rem;
-            margin-left: 15px;
+            font-size: 0.7rem;
             font-family: 'Orbitron', sans-serif;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 5px 10px;
+            border-radius: 4px;
         }
 
         header {
             text-align: center;
-            margin-top: 60px;
-            margin-bottom: 25px;
+            margin: 25px 0 15px;
+            padding: 0 15px;
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
-            margin-bottom: 8px;
+            font-size: clamp(1.6rem, 5vw, 2.6rem);
+            color: var(--gold-primary);
+            letter-spacing: 2px;
         }
 
-        p.subtitle {
-            font-size: 0.8rem;
+        p.sub {
+            font-size: 0.7rem;
             color: var(--teal-accent);
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* Mode Selector */
-        .mode-container {
-            display: flex;
-            flex-wrap: wrap;
+        /* Mode Selector Grid */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
-            justify-content: center;
-            max-width: 650px;
-            margin-bottom: 30px;
+            width: 90%;
+            max-width: 600px;
+            margin-bottom: 25px;
         }
 
         .mode-btn {
             background: rgba(26,10,46,0.6);
-            border: 1px solid rgba(212,175,55,0.2);
-            color: rgba(224,224,224,0.7);
-            padding: 8px 16px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            border-radius: 4px;
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--starlight);
+            padding: 10px 8px;
+            border-radius: 6px;
             cursor: pointer;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
-        .mode-btn:hover, .mode-btn.active {
+        .mode-btn.active, .mode-btn:hover {
             border-color: var(--gold-primary);
-            color: var(--gold-primary);
-            background: rgba(212,175,55,0.1);
+            background: rgba(212,175,55,0.15);
             box-shadow: 0 0 12px rgba(212,175,55,0.2);
         }
 
-        /* Breath Orb */
-        .visualizer-area {
+        .mode-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.72rem;
+            color: var(--gold-light);
+            margin-bottom: 4px;
+        }
+
+        .mode-count {
+            font-size: 0.6rem;
+            color: var(--teal-accent);
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Breathing Circle Visualization */
+        .circle-container {
             position: relative;
-            width: 260px;
-            height: 260px;
+            width: 220px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
+            margin: 20px 0 30px;
         }
 
-        .breath-orb {
+        .breath-circle {
+            position: absolute;
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(13,148,136,0.3) 0%, rgba(74,20,140,0.2) 70%);
             border: 2px solid var(--teal-accent);
-            box-shadow: 0 0 20px var(--teal-glow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: transform 1s ease-in-out, border-color 0.5s ease, box-shadow 0.5s ease;
+            background: radial-gradient(circle, rgba(13,148,136,0.2) 0%, rgba(5,5,5,0.8) 70%);
+            box-shadow: 0 0 25px rgba(13,148,136,0.4);
+            transition: transform 0.1s linear;
         }
 
-        .breath-orb.inhale {
-            transform: scale(1.65);
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 50px rgba(212,175,55,0.5);
+        .circle-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
         }
 
-        .breath-orb.hold {
-            transform: scale(1.65);
-            border-color: #a855f7;
-            box-shadow: 0 0 60px rgba(168,85,247,0.5);
-        }
-
-        .breath-orb.exhale {
-            transform: scale(1.0);
-            border-color: var(--teal-accent);
-            box-shadow: 0 0 20px var(--teal-glow);
-        }
-
-        .phase-text {
+        .phase-label {
             font-family: 'Cinzel', serif;
             font-size: 1.1rem;
-            font-weight: 900;
             color: var(--gold-light);
             letter-spacing: 2px;
         }
 
-        .timer-text {
+        .timer-count {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--starlight);
+            font-size: 1.6rem;
+            color: var(--gold-primary);
             margin-top: 4px;
         }
 
+        /* Control Buttons */
         .controls {
             display: flex;
             gap: 15px;
             margin-bottom: 25px;
         }
 
-        .action-btn {
-            padding: 12px 30px;
-            border: 1px solid var(--teal-accent);
-            background: rgba(13,148,136,0.1);
-            color: var(--teal-accent);
+        .btn-action {
+            padding: 12px 24px;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
             font-family: 'Orbitron', sans-serif;
             font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .action-btn:hover {
-            background: rgba(13,148,136,0.3);
-            box-shadow: 0 0 20px var(--teal-glow);
-        }
-
-        .stats-panel {
+        .session-card {
             background: rgba(26,10,46,0.4);
-            border: 1px solid rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.2);
             padding: 15px 25px;
             border-radius: 6px;
-            text-align: center;
             font-size: 0.75rem;
-            color: rgba(224,224,224,0.6);
-        }
-
-        .stats-panel span {
-            color: var(--gold-primary);
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        @media (max-width: 480px) {
-            .visualizer-area { width: 220px; height: 220px; }
-            .breath-orb { width: 120px; height: 120px; }
+            text-align: center;
+            color: rgba(224,224,224,0.8);
         }
     </style>
 </head>
 <body>
-    <div class="ambient-bg"></div>
 
     <nav>
         <a href="index.html" class="brand">BEAUTIFUL SAVAGE</a>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="admin.html">Admin</a>
+        <div>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="admin.html" class="nav-btn">Admin</a>
         </div>
     </nav>
 
     <header>
         <h1>Quantum Breath Trainer</h1>
-        <p class="subtitle">Coherence & Reprogramming Engine</p>
+        <p class="sub">Coherence & Reprogramming Engine</p>
     </header>
 
-    <div class="mode-container" id="modeContainer"></div>
+    <!-- Mode Selector Grid with Counts Under Titles -->
+    <div class="modes-grid">
+        <div class="mode-btn active" onclick="selectMode('coherence', this)">
+            <div class="mode-title">Quantum Coherence</div>
+            <div class="mode-count">In 5.5s | Out 5.5s</div>
+        </div>
 
-    <div class="visualizer-area">
-        <div class="breath-orb" id="breathOrb">
-            <div class="phase-text" id="phaseText">READY</div>
-            <div class="timer-text" id="timerText">--</div>
+        <div class="mode-btn" onclick="selectMode('box', this)">
+            <div class="mode-title">Box Breathing</div>
+            <div class="mode-count">In 4s | Hold 4s | Out 4s | Hold 4s</div>
+        </div>
+
+        <div class="mode-btn" onclick="selectMode('478', this)">
+            <div class="mode-title">4-7-8 Transmutation</div>
+            <div class="mode-count">In 4s | Hold 7s | Out 8s</div>
+        </div>
+
+        <div class="mode-btn" onclick="selectMode('solar', this)">
+            <div class="mode-title">Solar Activation</div>
+            <div class="mode-count">In 6s | Hold 2s | Out 4s</div>
+        </div>
+
+        <div class="mode-btn" onclick="selectMode('void', this)">
+            <div class="mode-title">Void Meditation</div>
+            <div class="mode-count">In 8s | Hold 4s | Out 8s | Hold 4s</div>
         </div>
     </div>
 
-    <div class="controls">
-        <button class="action-btn" id="startBtn" onclick="toggleSession()">Begin Practice</button>
-        <button class="action-btn" id="audioBtn" onclick="toggleAudio()" style="border-color:var(--gold-primary); color:var(--gold-primary);">Sound: OFF</button>
+    <!-- Circle Engine -->
+    <div class="circle-container">
+        <div class="breath-circle" id="circle"></div>
+        <div class="circle-text">
+            <div class="phase-label" id="phaseLabel">READY</div>
+            <div class="timer-count" id="timerCount">--</div>
+        </div>
     </div>
 
-    <div class="stats-panel">
-        Total Practice Time: <span id="totalTime">0</span> mins | Completed Cycles: <span id="totalCycles">0</span>
+    <!-- Controls -->
+    <div class="controls">
+        <button class="btn-action" id="startBtn" onclick="togglePractice()">BEGIN PRACTICE</button>
+        <button class="btn-action" onclick="toggleSynth()" id="synthBtn">SOUND: OFF</button>
+    </div>
+
+    <div class="session-card">
+        Total Practice Time: <span id="totalMins" style="color:var(--gold-primary);">0</span> mins | Completed Cycles: <span id="cycleCount" style="color:var(--gold-primary);">0</span>
     </div>
 
     <script>
         const MODES = {
-            coherence: { name: "Quantum Coherence", pattern: [4, 4, 6, 2], desc: "Standard heart-brain synchronization." },
-            box: { name: "Box Breathing", pattern: [4, 4, 4, 4], desc: "Deep focus & nervous system reset." },
-            relax: { name: "4-7-8 Transmutation", pattern: [4, 7, 8, 0], desc: "Rapid anxiety reduction & calming." },
-            energy: { name: "Solar Activation", pattern: [6, 0, 2, 0], desc: "High-energy frequency elevation." },
-            deep: { name: "Void Meditation", pattern: [5, 5, 5, 5], desc: "Deep trance state & subconscious opening." }
+            coherence: [{ name: 'INHALE', time: 5.5, scale: 1.6 }, { name: 'EXHALE', time: 5.5, scale: 1.0 }],
+            box: [{ name: 'INHALE', time: 4, scale: 1.6 }, { name: 'HOLD', time: 4, scale: 1.6 }, { name: 'EXHALE', time: 4, scale: 1.0 }, { name: 'HOLD', time: 4, scale: 1.0 }],
+            '478': [{ name: 'INHALE', time: 4, scale: 1.6 }, { name: 'HOLD', time: 7, scale: 1.6 }, { name: 'EXHALE', time: 8, scale: 1.0 }],
+            solar: [{ name: 'INHALE', time: 6, scale: 1.6 }, { name: 'HOLD', time: 2, scale: 1.6 }, { name: 'EXHALE', time: 4, scale: 1.0 }],
+            void: [{ name: 'INHALE', time: 8, scale: 1.6 }, { name: 'HOLD', time: 4, scale: 1.6 }, { name: 'EXHALE', time: 8, scale: 1.0 }, { name: 'HOLD', time: 4, scale: 1.0 }]
         };
 
         let currentModeKey = 'coherence';
         let isRunning = false;
-        let isAudioOn = false;
-        let breathTimer = null;
-        let currentPhaseIdx = 0;
-        let totalSecondsPracticed = parseInt(localStorage.getItem('bs_breath_time') || '0');
-        let totalCyclesCompleted = parseInt(localStorage.getItem('bs_breath_cycles') || '0');
+        let stepIdx = 0;
+        let timer = null;
+        let secondsLeft = 0;
+        let totalSeconds = 0;
+        let cycles = 0;
 
-        let audioCtx = null;
-
-        function initSynth() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        function playTone(freq, type = 'sine', duration = 1.5) {
-            if (!isAudioOn || !audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch(e) {}
-        }
-
-        const modeContainer = document.getElementById('modeContainer');
-        Object.keys(MODES).forEach(key => {
-            const btn = document.createElement('button');
-            btn.className = `mode-btn ${key === currentModeKey ? 'active' : ''}`;
-            btn.textContent = MODES[key].name;
-            btn.onclick = () => selectMode(key);
-            modeContainer.appendChild(btn);
-        });
-
-        function updateStatsUI() {
-            document.getElementById('totalTime').textContent = Math.floor(totalSecondsPracticed / 60);
-            document.getElementById('totalCycles').textContent = totalCyclesCompleted;
-        }
-        updateStatsUI();
-
-        function selectMode(key) {
-            if (isRunning) stopSession();
+        function selectMode(key, element) {
+            if (isRunning) togglePractice();
             currentModeKey = key;
-            document.querySelectorAll('.mode-btn').forEach((btn, idx) => {
-                btn.classList.toggle('active', Object.keys(MODES)[idx] === key);
-            });
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('phaseLabel').textContent = 'READY';
+            document.getElementById('timerCount').textContent = '--';
+            document.getElementById('circle').style.transform = 'scale(1)';
         }
 
-        function toggleAudio() {
-            initSynth();
-            isAudioOn = !isAudioOn;
-            document.getElementById('audioBtn').textContent = `Sound: ${isAudioOn ? 'ON' : 'OFF'}`;
-            if (isAudioOn && audioCtx.state === 'suspended') audioCtx.resume();
-        }
-
-        function toggleSession() {
-            if (isRunning) { stopSession(); } else { startSession(); }
-        }
-
-        function startSession() {
-            initSynth();
-            isRunning = true;
-            document.getElementById('startBtn').textContent = "End Practice";
-            currentPhaseIdx = 0;
-            executePhase();
-        }
-
-        function stopSession() {
-            isRunning = false;
-            clearTimeout(breathTimer);
-            document.getElementById('startBtn').textContent = "Begin Practice";
-            const orb = document.getElementById('breathOrb');
-            orb.className = 'breath-orb';
-            document.getElementById('phaseText').textContent = "READY";
-            document.getElementById('timerText').textContent = "--";
-        }
-
-        function executePhase() {
-            if (!isRunning) return;
-
-            const mode = MODES[currentModeKey];
-            const phases = [
-                { name: 'INHALE', duration: mode.pattern[0], class: 'inhale', freq: 285 },
-                { name: 'HOLD', duration: mode.pattern[1], class: 'hold', freq: 432 },
-                { name: 'EXHALE', duration: mode.pattern[2], class: 'exhale', freq: 174 },
-                { name: 'REST', duration: mode.pattern[3], class: 'exhale', freq: 126 }
-            ];
-
-            while (phases[currentPhaseIdx % 4].duration === 0) {
-                currentPhaseIdx++;
+        function togglePractice() {
+            const btn = document.getElementById('startBtn');
+            if (!isRunning) {
+                isRunning = true;
+                btn.textContent = 'PAUSE PRACTICE';
+                stepIdx = 0;
+                runStep();
+            } else {
+                isRunning = false;
+                btn.textContent = 'BEGIN PRACTICE';
+                clearTimeout(timer);
+                document.getElementById('phaseLabel').textContent = 'PAUSED';
             }
+        }
 
-            const current = phases[currentPhaseIdx % 4];
-            const orb = document.getElementById('breathOrb');
-            const phaseText = document.getElementById('phaseText');
-            const timerText = document.getElementById('timerText');
+        function runStep() {
+            if (!isRunning) return;
+            const steps = MODES[currentModeKey];
+            const currentStep = steps[stepIdx];
+            
+            document.getElementById('phaseLabel').textContent = currentStep.name;
+            secondsLeft = currentStep.time;
+            
+            const circle = document.getElementById('circle');
+            circle.style.transition = `transform ${currentStep.time}s ease-in-out`;
+            circle.style.transform = `scale(${currentStep.scale})`;
 
-            orb.className = `breath-orb ${current.class}`;
-            orb.style.transitionDuration = `${current.duration}s`;
-            phaseText.textContent = current.name;
-            playTone(current.freq, 'sine', current.duration);
+            updateTimer();
+        }
 
-            let timeLeft = current.duration;
-            timerText.textContent = timeLeft;
+        function updateTimer() {
+            if (!isRunning) return;
+            document.getElementById('timerCount').textContent = Math.ceil(secondsLeft);
 
-            const countdown = setInterval(() => {
-                if (!isRunning) { clearInterval(countdown); return; }
-                timeLeft--;
-                totalSecondsPracticed++;
-                localStorage.setItem('bs_breath_time', totalSecondsPracticed);
-                updateStatsUI();
-
-                if (timeLeft > 0) {
-                    timerText.textContent = timeLeft;
-                } else {
-                    clearInterval(countdown);
-                    currentPhaseIdx++;
-                    if (currentPhaseIdx % 4 === 0) {
-                        totalCyclesCompleted++;
-                        localStorage.setItem('bs_breath_cycles', totalCyclesCompleted);
-                        updateStatsUI();
-                    }
-                    executePhase();
+            if (secondsLeft <= 0) {
+                const steps = MODES[currentModeKey];
+                stepIdx = (stepIdx + 1) % steps.length;
+                if (stepIdx === 0) {
+                    cycles++;
+                    document.getElementById('cycleCount').textContent = cycles;
                 }
-            }, 1000);
+                runStep();
+            } else {
+                secondsLeft -= 0.1;
+                totalSeconds += 0.1;
+                document.getElementById('totalMins').textContent = Math.floor(totalSeconds / 60);
+                timer = setTimeout(updateTimer, 100);
+            }
+        }
+
+        // Optional Sound Synthesizer
+        let audioCtx = null, osc = null, isSynthOn = false;
+        function toggleSynth() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!isSynthOn) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                osc = audioCtx.createOscillator();
+                let g = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(432, audioCtx.currentTime); // 432 Hz healing tone
+                g.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                osc.connect(g); g.connect(audioCtx.destination);
+                osc.start();
+                document.getElementById('synthBtn').textContent = 'SOUND: ON';
+                isSynthOn = true;
+            } else {
+                if (osc) osc.stop();
+                document.getElementById('synthBtn').textContent = 'SOUND: OFF';
+                isSynthOn = false;
+            }
         }
     </script>
 </body>
